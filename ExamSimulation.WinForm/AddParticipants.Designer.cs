@@ -239,6 +239,7 @@
             this.Controls.Add(this.txtSurname);
             this.Controls.Add(this.txtName);
             this.Name = "AddParticipants";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddParticipants";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddInvitati_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).EndInit();

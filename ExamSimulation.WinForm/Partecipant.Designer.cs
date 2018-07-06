@@ -45,13 +45,14 @@
             this.dataGridView2.Size = new System.Drawing.Size(889, 537);
             this.dataGridView2.TabIndex = 2;
             // 
-            // Guest
+            // Partecipant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 537);
             this.Controls.Add(this.dataGridView2);
-            this.Name = "Guest";
+            this.Name = "Partecipant";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Guest";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Guest_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

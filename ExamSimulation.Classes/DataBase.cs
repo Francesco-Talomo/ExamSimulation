@@ -167,23 +167,27 @@ namespace ExamSimulation.Classes
             return (count > 0) ? true : false;
         }
 
-        public User GetUserFromLogin(User user)
+        public User GetUserFromLogin(Login login)
         {
+            User user = new User();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("[dbo].[GetUser]", connection))
+                using (SqlCommand command = new SqlCommand("[dbo].[GetUserByEmailAndPassword]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@email", user.Email);
-                    command.Parameters.AddWithValue("@password", user.Password);
+                    command.Parameters.AddWithValue("@email", login.Email);
+                    command.Parameters.AddWithValue("@password", login.Password);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
+                            user.Id = (int)reader["Id"];
+                            user.Name = reader["Name"].ToString();
+                            user.Surname = reader["Surname"].ToString();
                             user.Email = reader["Email"].ToString();
-                            //user.IdTypeUser = (int)reader["IdTypeUser"];
                             user.Password = reader["Password"].ToString();
+                            user.IdTypeUser = (TypeUser)(int)reader["IdTypeUser"];
                         }
                     }
                 }

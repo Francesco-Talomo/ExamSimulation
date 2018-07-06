@@ -23,13 +23,14 @@ namespace ExamSimulation.WinForm
             if (!string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             {
                 DataBase db = new DataBase();
+                Classes.Login login = new Classes.Login();
+                login.Email = txtEmail.Text;
+                login.Password = txtPassword.Text;
                 User user = new User();
-                user.Email = txtEmail.Text;
-                user.Password = txtPassword.Text;
-                user = db.GetUserFromLogin(user);
+                user = db.GetUserFromLogin(login);
                 if (user.IdTypeUser != 0)
                 {
-                    TypeUser typeUser = (TypeUser)user.IdTypeUser;
+                    TypeUser typeUser = user.IdTypeUser;
                     switch (typeUser)
                     {
                         case TypeUser.Organizzatore:

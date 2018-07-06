@@ -12,9 +12,14 @@ namespace ExamSimulation.WebApp.Controllers
         // GET: User
         public ActionResult Index()
         {
-            DataBase db = new DataBase();
-            ModelState.Clear();
-            return View(db.GetAllUserInListUser());
+            if (Session["TypeUser"] != string.Empty)
+            {
+                //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["BachelorParty"].ConnectionString;
+                DataBase db = new DataBase();
+                ModelState.Clear();
+                return View(db.GetAllUserInListUser());
+            }
+            return RedirectToAction("../Login");
         }
 
         // GET: User/Details/5

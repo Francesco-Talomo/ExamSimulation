@@ -58,16 +58,16 @@ namespace ExamSimulation.WinForm
                     Surname = txtSurname.Text,
                     Email = txtEmail.Text,
                     Password = txtPassword.Text,
-                    IdTypeUser = cbTypeUser.SelectedIndex
+                    IdTypeUser = (TypeUser)cbTypeUser.SelectedIndex + 1
                 };
                 db.InsertUser(user);
-                MessageBox.Show("Record Inserted Successfully");
+                MessageBox.Show(this, "Record Inserted Successfully");
                 DisplayData();
                 ClearData();
             }
             else
             {
-                MessageBox.Show("Please Provide Details!");
+                MessageBox.Show(this, "Please Provide Details!");
             }
         }
 
@@ -83,16 +83,16 @@ namespace ExamSimulation.WinForm
                     Surname = txtSurname.Text,
                     Email = txtEmail.Text,
                     Password = txtPassword.Text,
-                    IdTypeUser = cbTypeUser.SelectedIndex
+                    IdTypeUser = (TypeUser)cbTypeUser.SelectedIndex + 1
                 };
                 db.UpdateUser(user);
-                MessageBox.Show("Record Inserted Successfully");
+                MessageBox.Show(this, "Record Updated Successfully");
                 DisplayData();
                 ClearData();
             }
             else
             {
-                MessageBox.Show("Please Select Record to Delete");
+                MessageBox.Show(this, "Please Select Record to Delete");
             }
         }
 
@@ -102,13 +102,13 @@ namespace ExamSimulation.WinForm
             {
                 DataBase db = new DataBase();
                 db.DeleteUser(ID);
-                MessageBox.Show("Record Deleted Successfully!");
+                MessageBox.Show(this, "Record Deleted Successfully!");
                 DisplayData();
                 ClearData();
             }
             else
             {
-                MessageBox.Show("Please Select Record to Delete");
+                MessageBox.Show(this, "Please Select Record to Delete");
             }
         }
 
