@@ -20,7 +20,42 @@
                 @Html.ActionLink("Application name", "Index", "User", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav">
+                    @if (Session["TypeUser"] != null)
+                    {
+                        switch (Session["TypeUser"].ToString())
+                        {
+                            case "Organizzatore":
+                                <li>
+                                    @Html.ActionLink("Users", "Index", "User", new { area = "" }, new { @class = "" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Activity", "ActivityIndex", "Activity", new { area = "" }, new { @class = "" })
+                                </li>
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Activity", "Index", "Activity", new { area = "" }, new { @class = "" })
+                        </li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @if (Session["TypeUser"] != null)
+                        {
+                            @Html.ActionLink("Log out", "Logout", "Login", new { area = "" }, new { @class = "navbar-right" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Log in", "Index", "Login", new { area = "" }, new { @class = "navbar-right" })
+                        }
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

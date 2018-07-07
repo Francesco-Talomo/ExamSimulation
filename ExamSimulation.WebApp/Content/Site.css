@@ -16,6 +16,14 @@ textarea {
     max-width: 280px;
 }
 
+/*navbar-link-right {
+    float: right;
+}*/
+
+text-center {
+    text-align: center;
+}
+
 footer p {
     text-align: center;
 }

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity.cs" />
+    <Compile Include="ActivityForGuest.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="TypeUser.cs" />

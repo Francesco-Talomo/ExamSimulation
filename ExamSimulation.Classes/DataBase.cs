@@ -218,5 +218,66 @@ namespace ExamSimulation.Classes
             }
             return dt;
         }
+
+        public List<ActivityForGuest> GetActivityForGuest()
+        {
+            List<ActivityForGuest> activity = new List<ActivityForGuest>();
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("GetCountForDate", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command))
+                    {
+                        dataAdapter.Fill(dt);
+                    }
+                }
+                connection.Close();
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                activity.Add(
+                    new ActivityForGuest
+                    {
+                        CountPartecipant = Convert.ToInt32(dr["CountPartecipant"]),
+                        Date = Convert.ToDateTime(dr["Date"])
+                    });
+            }
+            return activity;
+        }
+
+        public List<Activity> GetActivityList()
+        {
+            List<Activity> activity = new List<Activity>();
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("GetAllActivity", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command))
+                    {
+                        dataAdapter.Fill(dt);
+                    }
+                }
+                connection.Close();
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                activity.Add(
+                    new Activity
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        Title = Convert.ToString(dr["Title"]),
+                        Description = Convert.ToString(dr["Description"]),
+                        Place = Convert.ToString(dr["Place"]),
+                        Date = Convert.ToDateTime(dr["Date"]),
+                    });
+            }
+            return activity;
+        }
     }
 }

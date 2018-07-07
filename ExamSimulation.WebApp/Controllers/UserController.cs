@@ -12,7 +12,7 @@ namespace ExamSimulation.WebApp.Controllers
         // GET: User
         public ActionResult Index()
         {
-            if (Session["TypeUser"] != string.Empty)
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
             {
                 //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["BachelorParty"].ConnectionString;
                 DataBase db = new DataBase();
@@ -25,86 +25,114 @@ namespace ExamSimulation.WebApp.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            DataBase db = new DataBase();
-            return View(db.GetAllUserInListUser().Find(smodel => smodel.Id == id));
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
+            {
+                DataBase db = new DataBase();
+                return View(db.GetAllUserInListUser().Find(model => model.Id == id));
+            }
+            return RedirectToAction("../Login");
         }
 
         // GET: User/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
+            {
+                return View();
+            }
+            return RedirectToAction("../Login");
         }
 
         // POST: User/Create
         [HttpPost]
         public ActionResult Create(User user)
         {
-            try
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    DataBase db = new DataBase();
-                    if (db.InsertUser(user))
+                    if (ModelState.IsValid)
                     {
-                        ViewBag.Message = "User Details Added Successfully";
-                        ModelState.Clear();
+                        DataBase db = new DataBase();
+                        if (db.InsertUser(user))
+                        {
+                            ViewBag.Message = "User Details Added Successfully";
+                            ModelState.Clear();
+                        }
                     }
+                    return View();
                 }
-                return View();
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("../Login");
         }
 
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            DataBase db = new DataBase();
-            return View(db.GetAllUserInListUser().Find(smodel => smodel.Id == id));
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
+            {
+                DataBase db = new DataBase();
+                return View(db.GetAllUserInListUser().Find(model => model.Id == id));
+            }
+            return RedirectToAction("../Login");
         }
 
         // POST: User/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, User user)
         {
-            try
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
             {
-                DataBase db = new DataBase();
-                db.UpdateUser(user);
-                return RedirectToAction("Index");
+                try
+                {
+                    DataBase db = new DataBase();
+                    db.UpdateUser(user);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("../Login");
         }
 
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
-            DataBase db = new DataBase();
-            return View(db.GetAllUserInListUser().Find(smodel => smodel.Id == id));
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
+            {
+                DataBase db = new DataBase();
+                return View(db.GetAllUserInListUser().Find(model => model.Id == id));
+            }
+            return RedirectToAction("../Login");
         }
 
         // POST: User/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, User user)
         {
-            try
+            if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
             {
-                DataBase db = new DataBase();
-                if (db.DeleteUser(id))
+                try
                 {
-                    ViewBag.AlertMsg = "Student Deleted Successfully";
+                    DataBase db = new DataBase();
+                    if (db.DeleteUser(id))
+                    {
+                        ViewBag.AlertMsg = "Student Deleted Successfully";
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("../Login");
         }
     }
 }

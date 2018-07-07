@@ -17,7 +17,7 @@ namespace ExamSimulation.WinForm
         {
             InitializeComponent();
             DataBase db = new DataBase();
-            dataGridView2.DataSource = db.GetTableByQueryOrStoredProcedure("GetAllActivity", true);
+            dataGridView2.DataSource = db.GetTableByQueryOrStoredProcedure("GetAllActivityForUser", true);
         }
 
         private void Guest_FormClosing(object sender, FormClosingEventArgs e)

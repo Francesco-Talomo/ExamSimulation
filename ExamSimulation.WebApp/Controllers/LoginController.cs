@@ -24,7 +24,17 @@ namespace ExamSimulation.WebApp.Controllers
             if (user.IdTypeUser != 0)
             {
                 Session["TypeUser"] = user.IdTypeUser.ToString();
-                return RedirectToAction("../User");
+                switch (user.IdTypeUser)
+                {
+                    case TypeUser.Organizzatore:
+                        return RedirectToAction("../User");
+
+                    case TypeUser.Invitato:
+                        return RedirectToAction("../Activity");
+
+                    case TypeUser.Utente:
+                        return RedirectToAction("../Activity");
+                }
             }
             else
             {
