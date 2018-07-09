@@ -1,4 +1,5 @@
 ﻿using ExamSimulation.Classes;
+using ExamSimulation.Scheduler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace ExamSimulation.WebApp.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            Job newJob = new Job("A job queued at: " + DateTime.Now, DateTime.Now.AddMinutes(4));
+            lock (MvcApplication._JobQueue)
+            {
+                MvcApplication._JobQueue.Add(newJob);
+            }
             return View();
         }
 

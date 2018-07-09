@@ -11,6 +11,7 @@ namespace ExamSimulation.Classes
     public class DataBase
     {
         public string connectionString = @"Data Source=LI-677\SQLEXPRESS01;Initial Catalog=BachelorParty;Integrated Security=True;";
+        //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["BachelorParty"].ConnectionString;
 
         public DataTable GetAllUser()
         {
@@ -278,6 +279,64 @@ namespace ExamSimulation.Classes
                     });
             }
             return activity;
+        }
+
+        public bool InsertActivity(Activity activity)
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("InsertActivity", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@title", activity.Title);
+                    command.Parameters.AddWithValue("@description", activity.Description);
+                    command.Parameters.AddWithValue("@place", activity.Place);
+                    command.Parameters.AddWithValue("@date", activity.Date);
+                    count = command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+            return (count > 0) ? true : false;
+        }
+
+        public bool UpdateActivity(Activity activity)
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("[dbo].[UpdateActivity]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@title", activity.Title);
+                    command.Parameters.AddWithValue("@description", activity.Description);
+                    command.Parameters.AddWithValue("@place", activity.Place);
+                    command.Parameters.AddWithValue("@date", activity.Date);
+                    count = command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+            return (count > 0) ? true : false;
+        }
+
+        public bool DeleteActivity(int id, Activity activity)
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("[dbo].[DeleteActivity]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@date", activity.Date);
+                    //count = command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+            return (count > 0) ? true : false;
         }
     }
 }

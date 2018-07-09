@@ -14,7 +14,6 @@ namespace ExamSimulation.WebApp.Controllers
         {
             if (Session["TypeUser"] != null && Session["TypeUser"].ToString().Equals(TypeUser.Organizzatore.ToString()))
             {
-                //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["BachelorParty"].ConnectionString;
                 DataBase db = new DataBase();
                 ModelState.Clear();
                 return View(db.GetAllUserInListUser());

@@ -22,6 +22,8 @@ namespace ExamSimulation.Classes
         public string Place { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd H:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
     }
 }
